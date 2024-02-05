@@ -1,0 +1,84 @@
+server:
+  servlet:
+    session:
+      timeout: 60m
+
+  compression:
+    enabled: true
+
+  port: ${SERVER_PORT}
+
+  tomcat:
+    threads:
+      max: 500
+      min-spare: 50
+    max-connections: 10000
+    accept-count: 1000
+    max-http-form-post-size: 100MB
+
+spring:
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+
+  profiles:
+    include: env
+
+  thymeleaf:
+    cache: false
+
+  devtools:
+    livereload:
+      enabled: true
+
+    remote:
+      restart:
+        enabled: true
+
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+  data:
+    redis:
+      lettuce:
+        pool:
+          max-active: 10
+          max-idle: 10
+          min-idle: 5
+          max-wait: 1000
+      port: ${REDIS_PORT}
+      host: ${REDIS_HOST}
+      connect-timeout: 100000
+      timeout: 180000
+      password: ${REDIS_PASSWORD}
+
+springdoc:
+  cache:
+    disabled: true
+  swagger-ui:
+    path: swagger-ui-custom.html
+  api-docs:
+    path: /api-docs
+  packages-to-scan: com.service.core
+
+logging:
+  pattern:
+    console: "[%d] %-5level [${PID:-} - %thread - {%C => %M, %l}] %logger : %msg%n"
+    file: "[%d] %-5level [${PID:-} - %thread - {%C => %M, %l}] %logger : %msg%n"
+
+  file:
+    name: ./logs/freeblog_util.log
+    max-history: 30
+
+  level:
+    root: INFO
+    com.service: INFO
+
+tus_util:
+  upload_directory: ${TUS_UPLOAD_DIRECTORY}
+  expiration: ${TUS_EXPIRATION}
+  upload_url: ${TUS_UPLOAD_URL}
+  video_token_recreate: ${VIDEO_TOKEN_RECREATE}
